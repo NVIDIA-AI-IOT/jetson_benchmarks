@@ -45,7 +45,7 @@ Note: All libraries will be installed for ```python3```
 |  vgg19_N2 | 66.43 |
 |  super_resolution_bsd500 | 150.46 |
 |  unet-segmentation | 145.42 |
-|  pose_estimation | 253.9 |
+|  pose_estimation | 237.1 |
 |  yolov3-tiny-416 | 546.69 |
 |  ResNet50_224x224 | 824.02 |
 |  ssd-mobilenet-v1 | 887.6 |
