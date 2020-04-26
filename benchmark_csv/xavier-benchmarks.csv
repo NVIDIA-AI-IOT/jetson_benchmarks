@@ -1,0 +1,9 @@
+ModelName,FrameWork,Devices,BatchSizeGPU,BatchSizeDLA,WS_GPU,WS_DLA,input,output,URL
+inception_v4,caffe,3,4,1,2048,2048,NA,prob,https://www.dropbox.com/s/b7masj8xdoycv2w/inception_v4.prototxt
+vgg19_N2,caffe,1,4,0,2048,0,NA,prob,https://www.dropbox.com/s/t4qq079g5q4jibx/vgg19_N2.prototxt
+super_resolution_bsd500,onnx,1,4,0,2048,2048,NA,NA,https://www.dropbox.com/s/hdhxndo23cm9i5y/super_resolution_bsd500.zip
+unet-segmentation,tensorrt,1,2,0,2048,None,"input_1,1,512,512",conv2d_19/Sigmoid,https://www.dropbox.com/s/85lttamnbjeig0e/unet-segmentation.uff
+pose_estimation,caffe,1,4,0,2048,None,NA,Mconv7_stage2_L2,https://www.dropbox.com/s/hwa5i14v67u57ij/pose_estimation.prototxt
+yolov3-tiny-416,onnx,1,16,0,2048,2048,NA,NA,https://www.dropbox.com/s/ck9e40b57rd5o14/yolov3-tiny-416.zip
+ResNet50_224x224,caffe,3,16,4,2048,2048,NA,prob,https://www.dropbox.com/s/9ohk387v0ki56wx/ResNet50_224x224.prototxt
+ssd-mobilenet-v1,onnx,3,16,2,2048,2048,NA,NA,https://www.dropbox.com/s/gx5zayt76vszhpo/ssd-mobilenet-v1.zip
