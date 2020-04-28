@@ -36,7 +36,7 @@ Note: All libraries will be installed for ```python3```
 
 ### Running Benchmarks
 #### Running All Benchmark Models at Once
-``` sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --model_dir <full-path-to-downloaded-models>```  <br />
+``` sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --model_dir <absolute-path-to-downloaded-models>```  <br />
 
 #### Sample Output
 |  **Model Name** | **FPS** |
@@ -83,7 +83,7 @@ Please follow setup, and installation requirements. <br/>
 ### Running All Benchmark Models at Once on Xavier <br/>
 ```
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/xavier-benchmarks.csv \
-                          --model_dir <full-path-to-downloaded-models> \
+                          --model_dir <absolute-path-to-downloaded-models> \
                           --jetson_devkit xavier \
                           --gpu_freq 1377000000 --dla_freq 1395200000 --power_mode 0
 ```
@@ -97,7 +97,7 @@ Please follow setup, and installation requirements. <br/>
 ### Running All Benchmark Models at Once on TX2
 ```
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano-benchmarks.csv \
-                            --model_dir <full-path-to-downloaded-models> \
+                            --model_dir <absolute-path-to-downloaded-models> \
                             --jetson_devkit tx2 \
                             --gpu_freq 1122000000 --power_mode 3 --precision fp16
 ```
@@ -105,7 +105,7 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano
 ### Running All Benchmark Models at Once on Nano
 ```
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano-benchmarks.csv \
-                            --model_dir <full-path-to-downloaded-models> \
+                            --model_dir <absolute-path-to-downloaded-models> \
                             --jetson_devkit nano \
                             --gpu_freq 921600000 --power_mode 0 --precision fp16
 ```
