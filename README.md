@@ -1,4 +1,4 @@
-# Benchmarks Targeted for Jetson NX DevKit (Using GPU+2DLA)
+# Benchmarks Targeted for Jetson Xavier NX (Using GPU+2DLA)
 
 The script will run following Benchmarks:
 - Names : Input Image Resolution <br />
