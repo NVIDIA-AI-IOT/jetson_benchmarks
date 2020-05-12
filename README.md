@@ -74,13 +74,13 @@ Note: All libraries will be installed for ```python3```
 8. For SSD-MobileNet-V1 Segmentation<br/>
 ``` sudo python3 benchmark.py --model_name ssd-mobilenet-v1 --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --model_dir <absolute-path-to-downloaded-models>```  <br />
 
-# For Jetson Xavier
+# For Jetson AGX Xavier
 Please follow setup, and installation requirements. <br/>
 
 ### Download Models
 ``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/xavier-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
 
-### Running All Benchmark Models at Once on Xavier <br/>
+### Running All Benchmark Models at Once on Jetson AGX Xavier <br/>
 ```
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/xavier-benchmarks.csv \
                           --model_dir <absolute-path-to-downloaded-models> \
@@ -88,13 +88,13 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/xavier-b
                           --gpu_freq 1377000000 --dla_freq 1395200000 --power_mode 0
 ```
 
-# For Jetson TX2 and Nano
+# For Jetson TX2 and Jeston Nano
 Please follow setup, and installation requirements. <br/>
 
 ### Download Models
 ``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
 
-### Running All Benchmark Models at Once on TX2
+### Running All Benchmark Models at Once on Jetson TX2
 ```
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano-benchmarks.csv \
                             --model_dir <absolute-path-to-downloaded-models> \
@@ -102,7 +102,7 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano
                             --gpu_freq 1122000000 --power_mode 3 --precision fp16
 ```
 
-### Running All Benchmark Models at Once on Nano
+### Running All Benchmark Models at Once on Jetson Nano
 ```
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano-benchmarks.csv \
                             --model_dir <absolute-path-to-downloaded-models> \
