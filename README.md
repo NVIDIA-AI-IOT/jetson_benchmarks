@@ -10,6 +10,7 @@ The script will run following Benchmarks:
 - Super Resolution  : 481x321<br />
 - Unet : 256x256 <br />
 
+For benchmark results on all NVIDIA Jetson Products; please have a look at [NVIDIA jetson_benchmark webpage](https://developer.nvidia.com/embedded/jetson-benchmarks)
 
 Following scripts are included:
 1. Install Requirements for running benchmark script (install_requirements.sh)
