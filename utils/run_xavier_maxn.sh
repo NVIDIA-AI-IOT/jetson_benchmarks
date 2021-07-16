@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ "$#" -ne 1 ]; then
-    echo "Usgae ./run_xavier_maxn.sh <Password>"
+    echo "Usage ./run_xavier_maxn.sh <Password>"
     echo " Example: ./run_xavier_maxn.sh "nvidia" "
     exit
 else
