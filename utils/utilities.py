@@ -2,6 +2,8 @@ import os
 import subprocess
 import sys
 import time
+import tensorrt
+
 FNULL = open(os.devnull, 'w')
 # Class for Utilities (TRT check, Power mode switching)
 # https://docs.nvidia.com/jetson/l4t/index.html#page/Tegra%2520Linux%2520Driver%2520Package%2520Development%2520Guide%2Fpower_management_jetson_xavier.html%23wwpID0E0KD0HA
@@ -24,8 +26,16 @@ class utilities():
         print("Jetson clocks are Set")
 
     def set_jetson_fan(self, switch_opt):
-        fan_cmd = "sh" + " " + "-c" + " " + "'echo" + " " + str(
-            switch_opt) + " " + ">" + " " + "/sys/devices/pwm-fan/target_pwm'"
+        nv_tegra_release_read = open("/etc/nv_tegra_release", "r")
+        release_value = int(nv_tegra_release_read.read().rstrip("\n")[3:5])
+        nv_tegra_release_read.close()
+        # for jp>=5.0 the pwm-fan changed
+        if release_value <=32:
+            fan_cmd = "sh" + " " + "-c" + " " + "'echo" + " " + str(
+                switch_opt) + " " + ">" + " " + "/sys/devices/pwm-fan/target_pwm'"
+        else:
+            fan_cmd = "sh" + " " + "-c" + " " + "'echo" + " " + str(
+              switch_opt) + " " + ">" + " " + "/sys/devices/platform/pwm-fan/hwmon/hwmon4/pwm1'"
         subprocess.call('sudo {}'.format(fan_cmd), shell=True, stdout=FNULL)
 
     def run_set_clocks_withDVFS(self):
@@ -105,3 +115,5 @@ class utilities():
             print("Exiting. Check if TensorRT is installed \n Use ``dpkg -l | grep nvinfer`` ")
             return True
         return False
+    def get_trt_version(self):
+        return tensorrt.__version__

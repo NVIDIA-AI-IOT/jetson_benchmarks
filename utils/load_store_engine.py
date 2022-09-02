@@ -24,6 +24,9 @@ class load_store_engine():
         model = []
         self.framework = os.path.splitext(self.model_name)[1]
         precision_cmd = str('--' + str(self.precision))
+        # int8 precision should enable fp16 otherwise layers not support int8 will fallback to fp32
+        if precision_cmd == "int8":
+            precision_cmd += str(" --fp16 ")
         for device_id in range(0, self.num_devices):
             if device_id == 1 or device_id == 2:
                 self.device = 'dla'
@@ -92,10 +95,10 @@ class load_store_engine():
             return  str(_model_input+" "+_model_output+" "+_model_base+ " " + batch_cmd)
 
 
-    def save_engine(self, _cmds, _models):
+    def save_engine(self, _cmds, _models, save_output):
         save_engine_path = str('--saveEngine=' + str(os.path.join(self.model_path, _models)) + '.engine')
         cmd = str(_cmds)+" "+str(save_engine_path)
-        trt_process = subprocess.Popen([cmd], cwd='/usr/src/tensorrt/bin/', shell=True, stdout=subprocess.DEVNULL,
+        trt_process = subprocess.Popen([cmd], cwd='/usr/src/tensorrt/bin/', shell=True, stdout=save_output,
                                        stderr=subprocess.STDOUT)
         while trt_process.poll() == None:
             trt_process.poll()
@@ -103,7 +106,10 @@ class load_store_engine():
 
     def save_all(self, commands, models):
         for e_id in range(0, self.num_devices):
-            self.save_engine(commands[e_id], models[e_id])
+            # write save-engine-log to file can help us debug
+            save_file = os.path.join(self.model_path, models[e_id] + '_save.txt')
+            save_output = open(save_file, 'w')
+            self.save_engine(commands[e_id], models[e_id], save_output)
 
     def load_engine(self, _cmds, _models, load_output):
         load_engine_path = str('--loadEngine=' + str(os.path.join(self.model_path, _models)) + '.engine')
@@ -140,10 +146,13 @@ class load_store_engine():
     def remove_engine(self, models):
         _engine_path = str(str(os.path.join(self.model_path, models)) + '.engine')
         _txtout_path = str(str(os.path.join(self.model_path, models)) + '.txt')
+        _txtsaveout_path = str(str(os.path.join(self.model_path, models)) + '_save.txt')
         if os.path.isfile(_engine_path):
             os.remove(_engine_path)
         if os.path.isfile(_txtout_path):
             os.remove(_txtout_path)
+        if os.path.isfile(_txtsaveout_path):
+            os.remove(_txtsaveout_path)
 
     def remove_all(self, models):
         for e_id in range(0, self.num_devices):

@@ -20,8 +20,8 @@ Following scripts are included:
 
 
 ### Version Dependencies:
-- JetPack 4.4 <br />
-- TensorRT 7 <br />
+- JetPack 4.4 / 4.6 / 5.0 <br />
+- TensorRT 7/8<br />
 
 ### Set up instructions
 ``` git clone https://github.com/NVIDIA-AI-IOT/jetson_benchmarks.git``` <br />
@@ -87,6 +87,18 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/xavier-b
                           --model_dir <absolute-path-to-downloaded-models> \
                           --jetson_devkit xavier \
                           --gpu_freq 1377000000 --dla_freq 1395200000 --power_mode 0
+```
+
+# For Jetson Xavier NX
+Please follow setup, and installation requirements. <br/>
+
+### Download Models
+``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
+
+### Running All Benchmark Models at Once on Jetson Xavier NX <br/>
+```
+# if Jetpack version >= 4.6 use flag `--power_mode 8`
+sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --model_dir <absolute-path-to-downloaded-models> --power_mode 0
 ```
 
 # For Jetson TX2 and Jeston Nano

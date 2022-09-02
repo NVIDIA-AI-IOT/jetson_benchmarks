@@ -17,6 +17,7 @@ class benchmark_argparser():
         # For Jetson Xavier: set to 0 (MAXN)
         # For Jetson TX2: set to 3 (MAXP)
         # For Jetson Nano: set to 0 (MAXN)
+        # For Jetson NX: for JP4.4 set to 0, JP4.6+ set to 8 (MAXN)
         self.parser.add_argument('--precision', dest='precision', default='int8',
                                  help='precision for model int8 or fp16', type=str)
         # For Jetson Xavier: set to int8

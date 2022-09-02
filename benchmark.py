@@ -29,7 +29,7 @@ def main():
         system_check.set_jetson_fan(255)
 
     # Read CSV and Write Data
-    benchmark_data = read_write_data(csv_file_path=csv_file_path, model_path=model_path)
+    benchmark_data = read_write_data(csv_file_path=csv_file_path, model_path=model_path, trt_version=system_check.get_trt_version())
     if args.all:
         latency_each_model =[]
         print("Running all benchmarks.. This will take at least 2 hours...")
