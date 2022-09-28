@@ -40,6 +40,11 @@ class utilities():
             self.set_clocks_withDVFS(frequency=self.gpu_freq, device='gpu')
             self.set_user_clock(device='dla')
             self.set_clocks_withDVFS(frequency=self.dla_freq, device='dla')
+        if self.jetson_devkit == 'orin':
+            self.set_user_clock(device='gpu')
+            self.set_clocks_withDVFS(frequency=self.gpu_freq, device='gpu')
+            self.set_user_clock(device='dla')
+            self.set_clocks_withDVFS(frequency=self.dla_freq, device='dla')
 
     def set_user_clock(self, device):
         if self.jetson_devkit == 'tx2':
@@ -56,31 +61,42 @@ class utilities():
                 base_register_dir = "/sys/kernel/debug/bpmp/debug/clk"
                 self.enable_register = base_register_dir + "/nafll_dla/mrq_rate_locked"
                 self.freq_register = base_register_dir + "/nafll_dla/rate"
-
+        if self.jetson_devkit == 'orin':
+            self.freq_register = "/sys/kernel/debug/bpmp/debug/clk/"
+            self.enable_register = ""   
+                
     def set_clocks_withDVFS(self, frequency, device):
-        from_freq = self.read_internal_register(register=self.freq_register, device=device)
+        if device == 'gpu':
+            freq_register_ = self.freq_register+"nafll_gpc0/rate"
+        if device == "dla":
+            freq_register_ = self.freq_register+"/nafll_dla0_core/rate"
+            
+        from_freq = self.read_internal_register(register=freq_register_, device=device)
         self.set_frequency(device=device, enable_register=self.enable_register, freq_register=self.freq_register, frequency=frequency, from_freq=from_freq)
         time.sleep(1)
-        to_freq = self.read_internal_register(register=self.freq_register, device=device)
+        to_freq = self.read_internal_register(register=freq_register_, device=device)
         print('{} frequency is set from {} Hz --> to {} Hz'.format(device, from_freq, to_freq))
 
     def set_frequency(self, device, enable_register, freq_register, frequency, from_freq):
-        self.write_internal_register(enable_register, 1)
+        
         if device == 'gpu':
-            max_freq_reg = freq_register+"/max_freq"
-            min_freq_reg = freq_register+"/min_freq"
-            if int(frequency) > int(from_freq):
-                self.write_internal_register(max_freq_reg, frequency)
-                self.write_internal_register(min_freq_reg, frequency)
-            else:
-                self.write_internal_register(min_freq_reg, frequency)
-                self.write_internal_register(max_freq_reg, frequency)
+            freq_register0 = freq_register+"nafll_gpc0/rate"
+            freq_register1 = freq_register+"nafll_gpc1/rate"
+            self.write_internal_register(freq_register0, frequency)
+            self.write_internal_register(freq_register1, frequency)
         elif device =='dla':
-            self.write_internal_register(freq_register, frequency)
+            # DLA0 
+            enable_register_dla0 = freq_register+"/nafll_dla0_core/mrq_rate_locked"
+            freq_register_dla0 = freq_register+"/nafll_dla0_core/rate"
+            self.write_internal_register(enable_register_dla0, 1)
+            self.write_internal_register(freq_register_dla0, frequency)
+            # DLA1
+            enable_register_dla1 = freq_register+"/nafll_dla1_core/mrq_rate_locked"
+            freq_register_dla1 = freq_register+"/nafll_dla1_core/rate"
+            self.write_internal_register(enable_register_dla1, 1)
+            self.write_internal_register(freq_register_dla1, frequency)
 
-    def read_internal_register(self, register, device):
-        if device == 'gpu':
-            register = register+"/cur_freq"
+    def read_internal_register(self, register, device):            
         reg_read = open(register, "r")
         reg_value = reg_read.read().rstrip("\n")
         reg_read.close()

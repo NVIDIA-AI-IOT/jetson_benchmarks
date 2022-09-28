@@ -49,7 +49,7 @@ class read_write_data():
                 lpd[e_id] = self.calculate_avg_latency(self.time_value_window[e_id])
         except IndexError:
             pass
-
+        print("----------------------", lpd[0], lpd[1], lpd[2])
         return lpd[0], lpd[1], lpd[2]
 
     def earliest_end(self, gpu_et, dla0_et, dla1_et):
@@ -81,14 +81,31 @@ class read_write_data():
                     if match_start:
                         start_time = datetime.datetime.strptime(match_start.group(), '%m/%d/%Y-%H:%M:%S')
                 elif "Average on" in line:
-                    matches = re.search(r"Average\s+on\s+(\d+)\s+runs.*?"
-                                        r"GPU\s+latency:\s+(\d+\.\d+)\s+.*?"
-                                        r"end\s+to\s+end\s+(\d+\.\d+)\s+ms", line)
-                    if matches:
-                        add_time += float(matches.group(1)) * float(matches.group(3)) / 1000
+                    # latency regex for trtexec 8.4+, end to end latency no longer exists
+                    match_above_8_4 = re.search(
+                        r'Average\s+on\s+(\d+)\s+runs.*?'
+                        r'GPU\s+latency:\s+(\d+\.\d+)\s+.*?',
+                        line,
+                    )
+                    # latency regex for trtexec 7.0 to 8.3
+                    match_below_8_4 = re.search(
+                        r'Average\s+on\s+(\d+)\s+runs.*?'
+                        r'GPU\s+latency:\s+(\d+\.\d+)\s+.*?'
+                        r'end\s+to\s+end\s+(\d+\.\d+)\s+ms',
+                        line,
+                    )
+                    #matches = re.search(r"Average\s+on\s+(\d+)\s+runs.*?"
+                    #                    r"GPU\s+latency:\s+(\d+\.\d+)\s+.*?", line,)
+                    if match_below_8_4:
+                        add_time += float(match_below_8_4.group(1)) * float(match_below_8_4.group(3)) / 1000
                         time_thread = start_time + timedelta(seconds=add_time)
                         time_stamps.append(time_thread)
-                        latencies.append(float(matches.group(2)))
+                        latencies.append(float(match_below_8_4.group(2)))
+                    elif match_above_8_4:
+                        add_time += float(match_above_8_4.group(1)) * float(match_above_8_4.group(2)) / 1000
+                        time_thread = start_time + timedelta(seconds=add_time)
+                        time_stamps.append(time_thread)
+                        latencies.append(float(match_above_8_4.group(2)))
                 else:
                     continue
         if time_stamps:
@@ -123,7 +140,7 @@ class read_write_data():
                 print('Error in Build, Please check the log in: {}'.format(self.model_path))
                 error_read = 1
                 continue
-        if any(latency is 0 for latency in latency_device[0:self.num_devices]):
+        if any(latency == 0 for latency in latency_device[0:self.num_devices]):
             latency_device[len(latency_device) - 2] = 0
             print("We recommend to run benchmarking in headless mode")
         else:

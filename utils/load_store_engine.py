@@ -24,16 +24,16 @@ class load_store_engine():
         model = []
         self.framework = os.path.splitext(self.model_name)[1]
         precision_cmd = str('--' + str(self.precision))
+        in_io_format = str('--inputIOFormats=' + str(self.precision) + ':chw+chw4+chw32')
         for device_id in range(0, self.num_devices):
             if device_id == 1 or device_id == 2:
                 self.device = 'dla'
                 model_base_path = self._model2deploy()
                 dla_cmd = str('--useDLACore=' + str(device_id - 1))
                 workspace_cmd = str('--workspace=' + str(self.ws_dla))
-                _model = str(os.path.splitext(self.model_name)[0]) + '_b' + str(self.batch_size_dla) + '_ws' + str(
-                    self.ws_dla) + '_' + str(self.device) + str(device_id)
+                _model = str(os.path.splitext(self.model_name)[0]) + '_b' + str(self.batch_size_dla)+'_ws'+str(self.ws_dla) + '_' + str(self.device) + str(device_id)
                 engine_CMD = str(
-                    './trtexec' + " " + model_base_path + " " + precision_cmd + " " +'--allowGPUFallback' + " " + " " + dla_cmd + " " +
+                    './trtexec' + " " + model_base_path + " " + in_io_format + " " +'--allowGPUFallback'+ " " + precision_cmd + " " + " " + dla_cmd + " " +
                     workspace_cmd)
             else:
                 self.device = 'gpu'
@@ -42,9 +42,10 @@ class load_store_engine():
                 _model = str(os.path.splitext(self.model_name)[0]) + '_b' + str(self.batch_size_gpu) + '_ws' + str(
                     self.ws_gpu) + '_' + str(self.device)
                 engine_CMD = str(
-                    './trtexec' + " " + model_base_path + " " + precision_cmd + " " + workspace_cmd)
+                    './trtexec' + " " + model_base_path + " " + in_io_format + " " + precision_cmd + " " +workspace_cmd)
             cmd.append(engine_CMD)
             model.append(_model)
+            
         return cmd, model
 
     def check_downloaded_models(self, model_name, framework):
@@ -66,13 +67,21 @@ class load_store_engine():
 
     def _model2deploy(self):
         if self.framework == str('.prototxt'):
-            _model_output = str('--output=' + str(self.model_output))
+            _model_output = ''
+            _out_io_format = '--outputIOFormats='
+            out_names = self.model_output.split(":")
+            for out in out_names:
+                _model_output += str('--output=' + str(out) + ' ')
+            for idx in range(len(out_names)):
+                _out_io_format += str(str(self.precision) + ':chw+chw4+chw32,')
+            
+            #_model_output = str('--output=' + str(self.model_output))
             _model_base = str('--deploy=' + str(os.path.join(self.model_path, self.model_name)))
             if self.device=='gpu':
                 batch_cmd = str('--batch=' + str(self.batch_size_gpu))
             elif self.device == 'dla':
                 batch_cmd = str('--batch=' + str(self.batch_size_dla))
-            return str(_model_output + " " + _model_base+ " " + batch_cmd)
+            return str(_model_output + " " + _out_io_format + " " + _model_base+ " " + batch_cmd)
         if self.framework == str('.onnx'):
             batch_cmd = str('--explicitBatch')
             model_name_split = os.path.splitext(self.model_name)[0]
