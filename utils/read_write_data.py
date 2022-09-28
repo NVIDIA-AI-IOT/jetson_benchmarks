@@ -94,8 +94,7 @@ class read_write_data():
                         r'end\s+to\s+end\s+(\d+\.\d+)\s+ms',
                         line,
                     )
-                    #matches = re.search(r"Average\s+on\s+(\d+)\s+runs.*?"
-                    #                    r"GPU\s+latency:\s+(\d+\.\d+)\s+.*?", line,)
+                    
                     if match_below_8_4:
                         add_time += float(match_below_8_4.group(1)) * float(match_below_8_4.group(3)) / 1000
                         time_thread = start_time + timedelta(seconds=add_time)
