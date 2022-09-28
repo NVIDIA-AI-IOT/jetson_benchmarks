@@ -115,6 +115,14 @@ def main():
             _, error_log = model.report()
             if not error_log:
                 model.remove()
+            
+    elif args.model_name == 'ssd-resnet34':
+        model = run_benchmark_models(csv_file_path=csv_file_path, model_path=model_path, precision=precision, benchmark_data=benchmark_data)
+        download_err = model.execute(read_index=8)
+        if not download_err:
+            _, error_log = model.report()
+            if not error_log:
+                model.remove()
 
     system_check.clear_ram_space()
     system_check.set_jetson_fan(0)
