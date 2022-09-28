@@ -1,4 +1,4 @@
-# Benchmarks Targeted for Jetson Xavier NX (Using GPU+2DLA)
+# Benchmarks Targeted for Jetson (Using GPU+2DLA)
 
 The script will run following Benchmarks:
 - Names : Input Image Resolution <br />
@@ -13,15 +13,15 @@ The script will run following Benchmarks:
 For benchmark results on all NVIDIA Jetson Products; please have a look at [NVIDIA jetson_benchmark webpage](https://developer.nvidia.com/embedded/jetson-benchmarks)
 
 Following scripts are included:
-1. Install Requirements for running benchmark script (install_requirements.sh)
+1. Installation requirements for running benchmark script (install_requirements.sh)
 2. CSV files containing parameters (benchmark_csv folder)
 3. Download Model (utils/download_models.py)
 4. Running Benchmark Script (benchmarks.py)
 
 
 ### Version Dependencies:
-- JetPack 4.4 <br />
-- TensorRT 7 <br />
+- JetPack 4.4+ <br />
+- TensorRT 7+ <br />
 
 ### Set up instructions
 ``` git clone https://github.com/NVIDIA-AI-IOT/jetson_benchmarks.git``` <br />
@@ -32,6 +32,7 @@ Following scripts are included:
 ``` sudo sh install_requirements.sh```<br />
 Note: All libraries will be installed for ```python3```
 
+# For Jetson Xavier NX
 ### Download Models
 ``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
 
@@ -50,7 +51,7 @@ Note: All libraries will be installed for ```python3```
 |  yolov3-tiny-416 | 546.69 |
 |  ResNet50_224x224 | 824.02 |
 |  ssd-mobilenet-v1 | 887.6 |
-#### Running Individual Benchmark Model
+#### Running an Individual Benchmark Model
 1. For Inception V4 <br/>
 ``` sudo python3 benchmark.py --model_name inception_v4 --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --model_dir <absolute-path-to-downloaded-models>```  <br />
 
@@ -76,7 +77,7 @@ Note: All libraries will be installed for ```python3```
 ``` sudo python3 benchmark.py --model_name ssd-mobilenet-v1 --csv_file_path <path-to>/benchmark_csv/nx-benchmarks.csv --model_dir <absolute-path-to-downloaded-models>```  <br />
 
 # For Jetson AGX Xavier
-Please follow setup, and installation requirements. <br/>
+Please follow setup and installation requirements. <br/>
 
 ### Download Models
 ``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/xavier-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
@@ -86,11 +87,11 @@ Please follow setup, and installation requirements. <br/>
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/xavier-benchmarks.csv \
                           --model_dir <absolute-path-to-downloaded-models> \
                           --jetson_devkit xavier \
-                          --gpu_freq 1377000000 --dla_freq 1395200000 --power_mode 0
+                          --gpu_freq 1377000000 --dla_freq 1395200000 --power_mode 0 --jetson_clocks
 ```
 
 # For Jetson TX2 and Jeston Nano
-Please follow setup, and installation requirements. <br/>
+Please follow setup and installation requirements. <br/>
 
 ### Download Models
 ``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
@@ -109,4 +110,28 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano
                             --model_dir <absolute-path-to-downloaded-models> \
                             --jetson_devkit nano \
                             --gpu_freq 921600000 --power_mode 0 --precision fp16
+```
+
+# For Jetson Orin
+Please follow setup, and installation requirements. <br/>
+
+### Download Models
+``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/orin-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
+
+### Running All Benchmark Models at Once on Orin <br/>
+
+Please check if Orin is in MAX power mode:
+`nvpmodel -q` <br />
+It should say:
+```
+NV Power Mode: MAXN
+0
+```
+
+If it isn't, set it to MAX power mode:
+`sudo nvpmodel -m 0`. Then run:
+
+```
+sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/orin-benchmarks.csv \
+                          --model_dir <absolute-path-to-downloaded-models>
 ```
