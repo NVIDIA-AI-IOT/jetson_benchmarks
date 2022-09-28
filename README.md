@@ -90,7 +90,7 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/xavier-b
                           --gpu_freq 1377000000 --dla_freq 1395200000 --power_mode 0 --jetson_clocks
 ```
 
-# For Jetson TX2 and Jeston Nano
+# For Jetson TX2 and Jetson Nano
 Please follow setup and installation requirements. <br/>
 
 ### Download Models
@@ -113,7 +113,7 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/tx2-nano
 ```
 
 # For Jetson Orin
-Please follow setup, and installation requirements. <br/>
+Please follow setup and installation requirements. <br/>
 
 ### Download Models
 ``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/orin-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
