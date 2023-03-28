@@ -135,3 +135,16 @@ If it isn't, set it to MAX power mode:
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/orin-benchmarks.csv \
                           --model_dir <absolute-path-to-downloaded-models>
 ```
+
+For Jetson Orin Nano
+Please follow setup and installation requirements. <br/>
+
+### Download Models
+``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/orin-nano-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
+
+### Running All Benchmark Models at Once on Orin Nano<br/>
+
+```
+sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/orin-nano-benchmarks.csv \
+                          --model_dir <absolute-path-to-downloaded-models> --jetson_clocks
+```
