@@ -1,0 +1,10 @@
+ModelName,FrameWork,Devices,BatchSizeGPU,BatchSizeDLA,WS_GPU,WS_DLA,input,output,URL
+inception_v4,caffe,1,32,0,2048,0,NA,prob,https://www.dropbox.com/s/nsz5agnidxgvrpe/inception_v4.prototxt
+vgg19_N2,caffe,1,64,0,2048,0,NA,prob,https://www.dropbox.com/s/7xmv5ez72dgw8we/vgg19_N2.prototxt
+super_resolution_bsd500,onnx,1,8,0,2048,0,NA,NA,https://www.dropbox.com/s/hdhxndo23cm9i5y/super_resolution_bsd500.zip
+unet-segmentation,tensorrt,1,32,0,2048,None,"input_1,1,512,512",conv2d_19/Sigmoid,https://www.dropbox.com/s/zvmcxed1f18g7qd/unet-segmentation.uff
+pose_estimation,caffe,1,64,0,2048,None,NA,Mconv7_stage2_L2,https://www.dropbox.com/s/fs4sb9vo5ccws9c/pose_estimation.prototxt
+yolov3-tiny-416,onnx,1,32,0,2048,0,NA,NA,https://www.dropbox.com/s/bb9k1vh4fumv5i2/yolov3-tiny-416.zip?dl=0
+ResNet50_224x224,caffe,1,32,0,2048,0,NA,prob,https://www.dropbox.com/s/xut47um2g509m5o/ResNet50_224x224.prototxt
+mobilenet_v1_ssd,caffe,1,32,0,2048,0,NA,conv17_2_mbox_loc:conv17_2_mbox_conf:conv16_2_mbox_loc:conv16_2_mbox_conf:conv15_2_mbox_loc:conv15_2_mbox_conf:conv14_2_mbox_loc:conv14_2_mbox_conf:conv13_mbox_loc:conv13_mbox_conf:conv11_mbox_loc:conv11_mbox_conf,https://www.dropbox.com/s/qn4mxjillbjimk1/mobilenet_v1_ssd.prototxt
+ssd_resnet34_1200x1200,caffe,1,1,0,2048,0,NA,conf_out,https://www.dropbox.com/s/2ei1gpalt0aer3i/ssd_resnet34_1200x1200.prototxt
