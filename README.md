@@ -136,7 +136,7 @@ sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/orin-ben
                           --model_dir <absolute-path-to-downloaded-models>
 ```
 
-For Jetson Orin Nano
+# For Jetson Orin Nano
 Please follow setup and installation requirements. <br/>
 
 ### Download Models
