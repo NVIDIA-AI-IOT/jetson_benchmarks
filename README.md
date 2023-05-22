@@ -148,3 +148,26 @@ Please follow setup and installation requirements. <br/>
 sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/orin-nano-benchmarks.csv \
                           --model_dir <absolute-path-to-downloaded-models> --jetson_clocks
 ```
+
+# For Jetson Orin NX
+Please follow setup and installation requirements. <br/>
+
+### Download Models for Orin NX 8GB
+``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/orin-nx-8gb-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
+
+### Running All Benchmark Models at Once on Orin NX 8GB<br/>
+
+```
+sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/orin-nx-8gb-benchmarks.csv \
+                          --model_dir <absolute-path-to-downloaded-models>
+```
+
+### Download Models for Orin NX 16GB
+``` python3 utils/download_models.py --all --csv_file_path <path-to>/benchmark_csv/orin-nx-16gb-benchmarks.csv --save_dir <absolute-path-to-downloaded-models>```
+
+### Running All Benchmark Models at Once on Orin NX 16GB<br/>
+
+```
+sudo python3 benchmark.py --all --csv_file_path <path-to>/benchmark_csv/orin-nx-16gb-benchmarks.csv \
+                          --model_dir <absolute-path-to-downloaded-models> 
+```
