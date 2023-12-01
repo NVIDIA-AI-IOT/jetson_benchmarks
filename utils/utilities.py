@@ -24,8 +24,10 @@ class utilities():
         print("Jetson clocks are Set")
 
     def set_jetson_fan(self, switch_opt):
-        fan_cmd = "sh" + " " + "-c" + " " + "'echo" + " " + str(
-            switch_opt) + " " + ">" + " " + "/sys/devices/pwm-fan/target_pwm'"
+        if os.path.exists('/sys/devices/pwm-fan/target_pwm'):
+            fan_cmd = "sh" + " " + "-c" + " " + "'echo" + " " + str(switch_opt) + " " + ">" + " " + "/sys/devices/pwm-fan/target_pwm'"
+        elif os.path.exists('/sys/devices/platform/pwm-fan'):
+            fan_cmd = "sh" + " " + "-c" + " " + "'echo" + " " + str(switch_opt) + " " + ">" + " " + "/sys/devices/platform/pwm-fan'"
         subprocess.call('sudo {}'.format(fan_cmd), shell=True, stdout=FNULL)
 
     def run_set_clocks_withDVFS(self):
