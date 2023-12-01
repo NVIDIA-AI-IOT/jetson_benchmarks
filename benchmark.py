@@ -46,7 +46,7 @@ def main():
                     model.remove()
             del gc.garbage[:]
             system_check.clear_ram_space()
-        benchmark_table = pd.DataFrame(latency_each_model, columns=['GPU (ms)', 'DLA0 (ms)', 'DLA1 (ms)', 'FPS', 'Model Name'], dtype=float)
+        benchmark_table = pd.DataFrame(latency_each_model, columns=['GPU (ms)', 'DLA0 (ms)', 'DLA1 (ms)', 'FPS', 'Model Name'])
         # Note: GPU, DLA latencies are measured in miliseconds, FPS = Frames per Second
         print(benchmark_table[['Model Name', 'FPS']])
         if args.plot:
